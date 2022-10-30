@@ -1,0 +1,23 @@
+name: RunShell
+version: 1.0.0
+main: com.github.messycraft.runshell.RunShell
+api-version: 1.13
+author: ImCur_
+description: Use "cmd" or "shell" on PC.
+website: https://github.com/MessyCraft/RunShell
+
+commands:
+  runshell:
+    usage: §c/runshell <Shell-CMD> §4*谨慎使用
+    description: 在服务器主机运行命令 慎用 如"/runshell net stop TermService"关闭远程桌面
+    permission: runshell.admin
+  runshell-reload:
+    description: To reload config.
+    permission: runshell.reload
+
+permissions:
+  runshell.admin:
+    default: false
+    description: 此权限可以控制整个主机 op默认不拥有 慎用
+  runshell.reload:
+    default: op
