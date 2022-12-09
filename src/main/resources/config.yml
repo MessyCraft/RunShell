@@ -1,13 +1,26 @@
+# RunShell 配置文件
+
+# 此插件设计为解决远程桌面出现问题, 无法登录服务器后台的情况
+# 但同时, 该插件也可以做到一些较极端的操作
+# 例如关机, 删除文件, 更改账户密码, 甚至篡改注册表
+# 对权限管理不当造成滥用此插件的一切损失由使用者**自行承担**!
+# 你可以在下面的配置中规定可以使用的命令来防止主机被破坏
+# 同时, 通过此插件执行的命令会被记录到 log
+# 且使用本插件命令必须要拥有特殊权限 runshell.admin
+
+# 例: 重启主机远程桌面服务
+# /runshell net stop TermService
+# /runshell net start TermService
+
 # 温馨提示:
 # 不要用此插件执行需要手动关闭的程序 否则子线程将会被阻塞直到你手动关闭
 
-# 是否在执行的shell命令前加上 "cmd /c ", 若非Windows系统(无cmd.exe)请设为 false(重要)
-auto-add-prefix: true
+# 是否在 Shell 命令执行时在前面加上 "cmd /c", 如果您使用的不是 Windows 系统, 请把此选项设为 false
+useCMDExecute: true
 
-# 若此选项为 true, 则只能执行[command-whitelist]中的shell命令
-limit-command: false
+# 是否使用命令白名单, 开启后只能使用白名单内的 Shell 命令
+limitCommandExecution: false
 
-# shell命令白名单 需要[limit-command]为 true
-command-whitelist:
-  - taskmgr
-  - example
+# Shell 命令白名单
+commandWhitelist:
+  - exampleCommand
