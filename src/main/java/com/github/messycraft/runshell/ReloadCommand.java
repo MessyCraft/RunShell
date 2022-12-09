@@ -9,7 +9,7 @@ public class ReloadCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         JavaPlugin.getProvidingPlugin(RunShell.class).reloadConfig();
-        sender.sendMessage("§aReload config successfully.");
+        sender.sendMessage("§eRunShell 配置文件已成功重载。");
         return true;
     }
 }

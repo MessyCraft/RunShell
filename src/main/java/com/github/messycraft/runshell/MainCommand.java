@@ -22,9 +22,9 @@ public class MainCommand implements CommandExecutor {
                         cmd = cmd + arg + " ";
                     }
                     cmd = cmd.substring(0, cmd.length()-1);
-                    if (main.getConfig().getBoolean("limit-command")) {
-                        if (!main.getConfig().getStringList("command-whitelist").contains(cmd)) {
-                            sender.sendMessage("§cThis command is not in whitelist.");
+                    if (main.getConfig().getBoolean("limitCommandExecution")) {
+                        if (!main.getConfig().getStringList("commandWhitelist").contains(cmd)) {
+                            sender.sendMessage("§c此命令不在命令白名单内。");
                             return;
                         }
                     }
@@ -42,7 +42,7 @@ public class MainCommand implements CommandExecutor {
                                 + now.getHour() + ":"
                                 + now.getMinute() + ":"
                                 + now.getSecond() + "] "
-                                + sender.getName() + " execute shell-command: \""
+                                + sender.getName() + " 执行 Shell 命令: \""
                                 + cmd + "\".\n";
                         byte[] bytes = log.getBytes();
                         fos.write(bytes, 0, bytes.length);
@@ -51,25 +51,25 @@ public class MainCommand implements CommandExecutor {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    if (main.getConfig().getBoolean("auto-add-prefix")) {
+                    if (main.getConfig().getBoolean("useCMDExecute")) {
                         cmd = "cmd /c " + cmd;
                     }
                     try {
                         Process process = Runtime.getRuntime().exec(cmd);
-                        sender.sendMessage("§aExecuted \"§7" + cmd + "§a\". Waiting...");
+                        sender.sendMessage("§e已请求执行命令 \"§6" + cmd + "§e\"。 等待执行结果...");
                         process.waitFor();
                         BufferedReader result = new BufferedReader(new InputStreamReader(process.getInputStream()));
                         String ans;
-                        sender.sendMessage("§3§lReturn:");
+                        sender.sendMessage("§e返回内容: ");
                         while ((ans = result.readLine()) != null) {
-                            sender.sendMessage("§b  " + ans);
+                            sender.sendMessage("§6  " + ans);
                         }
-                        sender.sendMessage("§aDone.");
+                        sender.sendMessage("§e执行完成。");
                         result.close();
-                        process.destroy();
+                        process.destroy(); 
                     } catch (IOException | InterruptedException e) {
                         e.printStackTrace();
-                        sender.sendMessage("§cError.");
+                        sender.sendMessage("§c执行出错。");
                     }
                 }
             }.runTaskAsynchronously(main);
